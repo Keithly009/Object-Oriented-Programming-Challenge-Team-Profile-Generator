@@ -36,7 +36,7 @@ function newEmployee() {
             name: 'id',
             message: 'What is the id of this employee?',
         }
-    ]) .then(({ position, email, id, name }) => { 
+    ]) .then(({ position, school, email, id, name, }) => { 
         switch(position) { 
             case 'Manager': 
             inquirer.prompt([
@@ -52,18 +52,51 @@ function newEmployee() {
                     email,
                     officeNumber
                 ))
-                
                 another()
+                
                 
             })
     // If chose Manager, ask about office Number 
             
-            break;
+            break; 
             case ' Intern' : 
+            inquirer.prompt([ 
+                {
+                    type: 'input', 
+                    name: 'School',
+                    message: 'What is your alumni or what was your most recent schooling?'
+                }
+            ]).then(({ school }) => {
+                employees.push(new Intern( 
+                    name,
+                    id,
+                    email,
+                    school
+                ))
+                another()
+                
 
+            })
     // If Chose Intern, ask about which School they are from
             break;
-            case ' Engineer': 
+            case ' Engineer':
+                inquirer.prompt([ 
+                    {
+                        type: 'input', 
+                        name: 'github',
+                        message: 'Can you please provide your github username?'
+                    }
+                ]).then(({ github }) => {
+                    employees.push(new Intern( 
+                        name,
+                        id,
+                        email,
+                        school
+                    ))
+                    another()
+
+                })
+             
 
     // If chose Engineer, ask about their Github
 
@@ -84,9 +117,24 @@ function another() {
         }
     ]).then(({ more }) => {
         if(more) newEmployee()
-        console.log(employees)
+        else renderHTMLFile()
         // else renderHTMLFile()
     })
+}
+
+function renderHTMLFile() {
+    fs.writeFileSync('./index.html', /*html*/`
+    <ul>
+        ${employees.map(employee => /*html*/ ` 
+            <li>
+                <div> 
+                    <h1> ${employee.getName()}</h1>
+                    <p>${employee.getEmail()}</p>  
+                </div>
+            </li> 
+        `)}  
+    </ul>
+    `)
 }
 
 newEmployee()
