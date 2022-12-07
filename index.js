@@ -5,7 +5,7 @@ const Intern = require('./lib/Intern');
 const inquirer = require('inquirer');
 const fs = require('fs');
 
-const employees = []
+const employee = []
 
 //TODO - write your inquirer app here to gather information about the team members, and generate the HTML file using fs
 
@@ -23,12 +23,12 @@ function newEmployee() {
         },
         {
             type: 'input',
-            name: 'Name',
+            name: 'name',
             message: 'What is the name of this employee?',
         },
         {
             type: 'input',
-            name: 'Email',
+            name: 'email',
             message: 'What is the email address this employee would use?'
         },
         {
@@ -36,7 +36,7 @@ function newEmployee() {
             name: 'id',
             message: 'What is the id of this employee?',
         }
-    ]) .then(({ position, school, email, id, name, }) => { 
+    ]) .then(({ position, email, id, name, }) => { 
         switch(position) { 
             case 'Manager': 
             inquirer.prompt([
@@ -46,7 +46,7 @@ function newEmployee() {
                     message: 'Please provide the Office number.'
                 }
             ]).then (({ officeNumber }) => {
-                employees.push(new Manager(
+                employee.push(new Manager(
                     name, 
                     id,
                     email,
@@ -59,15 +59,15 @@ function newEmployee() {
     // If chose Manager, ask about office Number 
             
             break; 
-            case ' Intern' : 
+            case 'Intern' : 
             inquirer.prompt([ 
                 {
                     type: 'input', 
-                    name: 'School',
+                    name: 'school',
                     message: 'What is your alumni or what was your most recent schooling?'
                 }
             ]).then(({ school }) => {
-                employees.push(new Intern( 
+                employee.push(new Intern( 
                     name,
                     id,
                     email,
@@ -79,7 +79,7 @@ function newEmployee() {
             })
     // If Chose Intern, ask about which School they are from
             break;
-            case ' Engineer':
+            case 'Engineer':
                 inquirer.prompt([ 
                     {
                         type: 'input', 
@@ -87,14 +87,14 @@ function newEmployee() {
                         message: 'Can you please provide your github username?'
                     }
                 ]).then(({ github }) => {
-                    employees.push(new Intern( 
+                    employee.push(new Intern( 
                         name,
                         id,
                         email,
-                        school
+                        github
                     ))
                     another()
-
+                        
                 })
              
 
@@ -125,11 +125,20 @@ function another() {
 function renderHTMLFile() {
     fs.writeFileSync('./index.html', /*html*/`
     <ul>
-        ${employees.map(employee => /*html*/ ` 
+        ${employee.map(employee => /*html*/ `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Work Team Profile Generator</title> 
+        </head> 
             <li>
                 <div> 
                     <h1> ${employee.getName()}</h1>
-                    <p>${employee.getEmail()}</p>  
+                    <p>${employee.getEmail()}</p>
+                    <p>${employee.getId()}</p>   
                 </div>
             </li> 
         `)}  
