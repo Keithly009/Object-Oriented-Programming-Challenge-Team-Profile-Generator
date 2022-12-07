@@ -1,13 +1,13 @@
 
-# 10 Object-Oriented Programming: Team Profile Generator
+# Work Team Profile Generator
 
 ## Your Task
 
-Your task is to build a Node.js command-line application that takes in information about employees on a software engineering team, then generates an HTML webpage that displays summaries for each person. Testing is key to making code maintainable, so you’ll also write a unit test for every part of your code and ensure that it passes each test.
+In this project we are using tests and constructors to link them to the lib files in order to ensure that it is all properly coded. Each of the classes will be called through the "Employee.js" file whenever I would use the inquirer prompt (which will be used to ask the user a variety of questions that is relevant for each of the employee positions. 
 
-Because this application won’t be deployed, you’ll need to provide a link to a walkthrough video that demonstrates its functionality and all of the tests passing. You’ll need to submit a link to the video AND add it to the readme of your project.
+github repo: https://github.com/Keithly009/Object-Oriented-Programming-Challenge-Team-Profile-Generator/edit/master/README.md 
 
-> **Note**: There is no starter code for this assignment.
+github demo: https://youtu.be/SLk8KeF30Xo
 
 ## User Story
 
