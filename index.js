@@ -36,7 +36,9 @@ function newEmployee() {
             name: 'id',
             message: 'What is the id of this employee?',
         }
-    ]) .then(({ position, email, id, name, }) => { 
+    ])
+     // If chose Manager, ask about office Number  
+    .then(({ position, email, id, name, }) => { 
         switch(position) { 
             case 'Manager': 
             inquirer.prompt([
@@ -56,8 +58,8 @@ function newEmployee() {
                 
                 
             })
-    // If chose Manager, ask about office Number 
             
+            // If Chose Intern, ask about which School they are from
             break; 
             case 'Intern' : 
             inquirer.prompt([ 
@@ -77,7 +79,8 @@ function newEmployee() {
                 
 
             })
-    // If Chose Intern, ask about which School they are from
+
+            // If chose Engineer, ask about their Github
             break;
             case 'Engineer':
                 inquirer.prompt([ 
@@ -87,7 +90,7 @@ function newEmployee() {
                         message: 'Can you please provide your github username?'
                     }
                 ]).then(({ github }) => {
-                    employee.push(new Intern( 
+                    employee.push(new Engineer( 
                         name,
                         id,
                         email,
@@ -96,9 +99,6 @@ function newEmployee() {
                     another()
                         
                 })
-             
-
-    // If chose Engineer, ask about their Github
 
             break;
             default: 
@@ -134,16 +134,34 @@ function renderHTMLFile() {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Work Team Profile Generator</title> 
         </head> 
-            <li>
                 <div> 
-                    <h1> ${employee.getName()}</h1>
-                    <p>${employee.getEmail()}</p>
-                    <p>${employee.getId()}</p>   
-                </div>
-            </li> 
+                    <h1>My Name is :${employee.getName()}</h1>
+                    <p> Here is my ID: ${employee.getId()}</p>
+                    <p> <a href="Please mail to ${employee.getEmail()}"a>Here is my Email: ${employee.getEmail()}</a></p>
+                    <h2> ${uniqueField(employee)} <h2>     
+                </div> 
         `)}  
     </ul>
     `)
 }
+
+function uniqueField(employee) {
+    // Asks for Manager's Office Number 
+    switch (employee.getRole()) {
+        // Office Number 
+        case "Manager": 
+        return `<p> OfficeNumber:${employee.getOfficeNumber()} </p>`
+        break; 
+    case "Intern": 
+    return `<p> Attended: ${employee.getSchool()} </p>`
+        break;
+    // Ask for Engineer's github 
+    case 'Engineer' : 
+        return ` <p <a href ="https://www.github.com/${employee.getGithub()}"> GitHub: ${employee.getGithub()}</a></p>`
+        break;
+    }
+    
+    
+} 
 
 newEmployee()
